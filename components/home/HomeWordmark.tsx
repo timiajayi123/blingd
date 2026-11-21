@@ -78,7 +78,7 @@ export default function HomeWordmark() {
         ))}
       </span>
       <h1
-        className={`home-brand-wordmark is-shining-${stage} ${stage === "complete" ? "is-flipping" : ""}`}
+        className={`home-brand-wordmark ${stage === "complete" ? "is-flipping" : ""}`}
         aria-label={stage === "complete" ? "BLING'D" : text}
       >
         {text.split("").map((letter, index) => (

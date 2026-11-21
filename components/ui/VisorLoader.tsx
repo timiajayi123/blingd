@@ -98,7 +98,7 @@ export default function VisorLoader({
       animate={{ opacity: isFading ? 0 : 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: reducedMotion ? 0.15 : 0.45, ease: "easeOut" }}
-      className="fixed inset-0 z-[9999] grid place-items-center overflow-hidden bg-black/20 px-6 backdrop-blur-[1px]"
+      className="fixed inset-0 z-[9999] grid place-items-center overflow-hidden bg-black/8 px-6 backdrop-blur-[0.5px]"
     >
       <div className="w-full max-w-[900px]">
         <svg
