@@ -6,7 +6,7 @@
 
 /* Full-bleed editorial landing image. */
 body:has(.blank-homepage) {
-  background: #101010;
+  background: #000;
 }
 
 body:has(.blank-homepage) .noise-overlay,
@@ -18,6 +18,7 @@ body:has(.blank-homepage) .scanlines {
   min-height: 100dvh;
   background-color: #101010;
   background-image:
+    linear-gradient(to bottom, transparent 64%, #000),
     linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.04)),
     url("/images/IMG_2793.png");
   background-position: center;
@@ -78,10 +79,44 @@ body:has(.blank-homepage) .scanlines {
   transform-origin: center 52%;
 }
 
+.footer-visors {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.footer-visor {
+  position: absolute;
+  width: clamp(3rem, 9vw, 7rem);
+  aspect-ratio: 2;
+  background: url("/images/visor-loader.png") center / 115% auto no-repeat;
+  filter: brightness(1.65);
+  opacity: 0.32;
+  animation: footer-visor-float 8s ease-in-out infinite alternate;
+}
+
+.footer-visor:nth-child(2n) {
+  animation-delay: -4s;
+  animation-duration: 10s;
+}
+
+.footer-visor:nth-child(3n) {
+  animation-delay: -6s;
+}
+
+@keyframes footer-visor-float {
+  from { transform: translateY(0) rotate(-12deg); }
+  to { transform: translateY(24px) rotate(10deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-visor { animation: none; }
+}
+
 /* Druk Condensed Super is used automatically when its licensed font is added. */
 .footer-brand-wordmark {
   display: inline-block;
-  color: #000;
+  color: inherit;
   font-family: "Druk Condensed Super", "Druk Condensed", var(--font-oswald), "Arial Narrow", Impact, sans-serif;
   font-size: clamp(3rem, 7vw, 4.75rem);
   font-stretch: ultra-condensed;
