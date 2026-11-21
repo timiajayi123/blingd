@@ -27,7 +27,7 @@ export default function Home() {
           href="/store"
           aria-label="Open shop"
           title="Shop"
-          className="grid h-16 w-16 place-items-center bg-transparent text-black transition hover:scale-105 hover:opacity-55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4"
+          className="grid h-16 w-16 translate-y-8 place-items-center bg-transparent text-black transition hover:scale-105 hover:opacity-55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4"
         >
           <ShoppingBag size={38} strokeWidth={1.5} aria-hidden="true" />
         </Link>

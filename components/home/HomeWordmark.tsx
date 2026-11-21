@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 const INTRO = "BOSSY";
 const BRAND = "BLiNG'D";
@@ -8,6 +9,8 @@ const BRAND = "BLiNG'D";
 export default function HomeWordmark() {
   const [text, setText] = useState("");
   const [stage, setStage] = useState<"waiting" | "intro" | "erase" | "brand" | "complete">("waiting");
+  const prefersReducedMotion = useReducedMotion();
+  const isGlobalLoading = stage === "waiting";
 
   useEffect(() => {
     const start = () => setStage("intro");
@@ -48,9 +51,35 @@ export default function HomeWordmark() {
 
   return (
     <div className="home-wordmark-lockup">
-      <span className="home-wordmark-be">Be</span>
+      <span className="home-wordmark-be" aria-label="Be">
+        {"Be".split("").map((char, index) => (
+          <motion.span
+            key={`${index}-${isGlobalLoading}`}
+            initial={{ opacity: 0, scale: 0.5, y: 20 }}
+            animate={!isGlobalLoading ? (prefersReducedMotion ? {
+              opacity: 1, scale: 1, y: 0, rotate: 0,
+            } : {
+              opacity: 1,
+              scale: [1, 1.08, 1],
+              y: [0, -6, 0],
+              rotate: [-1.5, 1.5, -1.5],
+            }) : {}}
+            transition={{
+              opacity: { duration: 0.4, delay: 0.5 + index * 0.1 },
+              scale: { duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.1 },
+              y: { duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.1 },
+              rotate: { duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.1 },
+            }}
+            className="inline-block"
+            style={{ transformOrigin: "50% 100%" }}
+            aria-hidden="true"
+          >
+            {char}
+          </motion.span>
+        ))}
+      </span>
       <h1
-        className={`home-brand-wordmark ${stage === "complete" ? "is-flipping" : ""}`}
+        className={`home-brand-wordmark is-shining-${stage} ${stage === "complete" ? "is-flipping" : ""}`}
         aria-label={stage === "complete" ? "BLING'D" : text}
       >
         {text.split("").map((letter, index) => (
