@@ -1,15 +1,7 @@
 import { getServerBanners } from "@/lib/serverBanners";
-import { Metadata } from "next";
 
 import GalleryClient from "./GalleryClient";
 import GalleryBackground from "@/components/gallery/GalleryBackground";
-
-export const metadata: Metadata = {
-  title: "Gallery",
-  description: "Visual archive of the BLING’D universe.",
-  alternates: { canonical: "/gallery" },
-  openGraph: { url: "/gallery" },
-};
 
 export default async function GalleryPage() {
   try {

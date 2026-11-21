@@ -1,13 +1,4 @@
 import Link from "next/link";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Terms of Service",
-  description: "Terms that apply when browsing or ordering from the BLING’D official store.",
-  alternates: { canonical: "/terms" },
-  openGraph: { url: "/terms" },
-};
-
 export default function TermsPage() {
   return (
     <main className="min-h-screen bg-zinc-50 px-4 py-14 text-zinc-900 sm:px-6 lg:py-20">
