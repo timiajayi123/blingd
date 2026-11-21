@@ -8,21 +8,16 @@ import { cache } from "react";
 import { cleanSeoDescription, toCategorySlug } from "@/lib/seo";
 import CategoryClient from "./CategoryClient";
 
-export const revalidate = 900;
+// Categories depend on the live storefront catalog. Rendering them at request
+// time prevents deployment builds from failing when the external catalog is
+// unavailable or when its credentials are intentionally deployment-only.
+export const dynamic = "force-dynamic";
 
 type Props = {
   params: Promise<{
     name: string;
   }>;
 };
-
-export async function generateStaticParams() {
-  const categories = await getServerCategories();
-  return categories
-    .map((category) => String(category.name || "").trim())
-    .filter(Boolean)
-    .map((name) => ({ name: toCategorySlug(name) }));
-}
 
 const resolveCategory = cache(async (routeName: string) => {
   const decodedName = decodeURIComponent(routeName).trim();

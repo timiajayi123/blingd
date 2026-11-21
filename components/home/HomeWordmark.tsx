@@ -10,7 +10,6 @@ export default function HomeWordmark() {
   const [text, setText] = useState("");
   const [stage, setStage] = useState<"waiting" | "intro" | "erase" | "brand" | "complete">("waiting");
   const prefersReducedMotion = useReducedMotion();
-  const isGlobalLoading = stage === "waiting";
 
   useEffect(() => {
     const start = () => setStage("intro");
@@ -54,18 +53,18 @@ export default function HomeWordmark() {
       <span className="home-wordmark-be" aria-label="Be">
         {"Be".split("").map((char, index) => (
           <motion.span
-            key={`${index}-${isGlobalLoading}`}
+            key={index}
             initial={{ opacity: 0, scale: 0.5, y: 20 }}
-            animate={!isGlobalLoading ? (prefersReducedMotion ? {
+            animate={prefersReducedMotion ? {
               opacity: 1, scale: 1, y: 0, rotate: 0,
             } : {
               opacity: 1,
               scale: [1, 1.08, 1],
               y: [0, -6, 0],
               rotate: [-1.5, 1.5, -1.5],
-            }) : {}}
+            }}
             transition={{
-              opacity: { duration: 0.4, delay: 0.5 + index * 0.1 },
+              opacity: { duration: 0.4, delay: 0.1 + index * 0.1 },
               scale: { duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.1 },
               y: { duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.1 },
               rotate: { duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.1 },
