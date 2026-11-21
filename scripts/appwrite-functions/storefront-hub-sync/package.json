@@ -1,0 +1,7 @@
+{
+  "name": "storefront-hub-sync",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": { "node-appwrite": "29.0.0" }
+}
