@@ -1,4 +1,13 @@
 import Link from 'next/link';
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Shipping Rules",
+  description: "BLING’D delivery coverage, charges, timelines, and missed-delivery rules.",
+  alternates: { canonical: "/delivery-policy" },
+  openGraph: { url: "/delivery-policy" },
+};
+
 export default function DeliveryPolicy() {
   return (
     <main className="min-h-screen bg-zinc-50 px-4 py-14 text-zinc-900 sm:px-6 lg:py-20">

@@ -1,3 +1,12 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "How BLING’D collects, uses, and protects customer information.",
+  alternates: { canonical: "/privacy" },
+  openGraph: { url: "/privacy" },
+};
+
 export default function PrivacyPolicy() {
   return (
     <main className="min-h-screen bg-zinc-50 px-4 py-14 text-zinc-900 sm:px-6 lg:py-20">

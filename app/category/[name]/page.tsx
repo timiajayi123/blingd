@@ -3,8 +3,9 @@ import { getServerCategories } from "@/lib/serverCatalog";
 import { getCachedStorefrontProducts } from "@/lib/cachedCatalog";
 import { Product } from "@/app/types/Product";
 import { notFound, permanentRedirect } from "next/navigation";
+import type { Metadata } from "next";
 import { cache } from "react";
-import { toCategorySlug } from "@/lib/seo";
+import { cleanSeoDescription, toCategorySlug } from "@/lib/seo";
 import CategoryClient from "./CategoryClient";
 
 // Categories depend on the live storefront catalog. Rendering them at request
@@ -33,6 +34,27 @@ const resolveCategory = cache(async (routeName: string) => {
     }) || null
   );
 });
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { name: routeName } = await params;
+  const category = await resolveCategory(routeName);
+
+  if (!category) {
+    return { title: "Category", robots: { index: false, follow: false } };
+  }
+
+  const name = String(category.name).trim();
+  const canonicalPath = `/category/${toCategorySlug(name)}`;
+  return {
+    title: name,
+    description: cleanSeoDescription(
+      category.description,
+      `Shop ${name} clothing and streetwear from BLING’D.`,
+    ),
+    alternates: { canonical: canonicalPath },
+    openGraph: { title: `${name} | BLING’D`, url: canonicalPath },
+  };
+}
 
 export default async function CategoryPage({ params }: Props) {
   const { name: routeName } = await params;

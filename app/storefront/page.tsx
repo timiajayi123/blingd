@@ -3,7 +3,16 @@ import {
   getCachedStorefrontProducts,
 } from "@/lib/cachedCatalog";
 import StorefrontShopClient from "@/app/storefront/StorefrontShopClient";
+import { Metadata } from "next";
 import { getStorefrontMedia } from "@/lib/storefrontMedia";
+
+export const metadata: Metadata = {
+  title: "Shop",
+  description:
+    "Shop BLING’D streetwear, clothing, and accessories. Explore current drops and new pieces from Lagos, Nigeria.",
+  alternates: { canonical: "/store" },
+  openGraph: { url: "/store" },
+};
 
 export const revalidate = 900;
 

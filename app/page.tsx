@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ShoppingBag, ShoppingCart } from "lucide-react";
 import HomeWordmark from "@/components/home/HomeWordmark";
+
+export const metadata: Metadata = {
+  title: { absolute: "BLING’D | Official Store" },
+  description: "Shop BLING’D now.",
+  alternates: { canonical: "/" },
+  openGraph: { url: "/" },
+};
 
 export default function Home() {
   return (
