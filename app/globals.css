@@ -4,9 +4,9 @@
 @import "swiper/css/navigation";
 @import "cropperjs/dist/cropper.css";
 
-/* Keep the public landing route intentionally blank and white. */
+/* Full-bleed editorial landing image. */
 body:has(.blank-homepage) {
-  background: #fff;
+  background: #101010;
 }
 
 body:has(.blank-homepage) .noise-overlay,
@@ -16,7 +16,13 @@ body:has(.blank-homepage) .scanlines {
 
 .blank-homepage {
   min-height: 100dvh;
-  background: #fff;
+  background-color: #101010;
+  background-image:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.04)),
+    url("/images/IMG_2793.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* Tall, compressed wordmark styling used by the storefront title. */
@@ -110,7 +116,7 @@ body:has(.blank-homepage) .scanlines {
   position: relative;
   left: clamp(0.75rem, 2.8vw, 2.75rem);
   margin: 0;
-  color: #111;
+  color: #fff;
   font-family: "Druk Condensed Super", "Druk Condensed", var(--font-oswald), "Arial Narrow", Impact, sans-serif;
   font-size: clamp(5rem, 18vw, 14rem);
   font-stretch: ultra-condensed;
@@ -135,7 +141,7 @@ body:has(.blank-homepage) .scanlines {
   z-index: 2;
   top: clamp(-3.9rem, -8vw, -2.15rem);
   left: clamp(29%, 24vw, 31%);
-  color: #111;
+  color: #fff;
   font-family: var(--font-blingd-script), cursive;
   font-size: clamp(6.25rem, 16vw, 11.5rem);
   font-weight: 300;
@@ -150,6 +156,8 @@ body:has(.blank-homepage) .scanlines {
   position: relative;
   z-index: 1;
   translate: clamp(2.75rem, 6vw, 6.5rem) clamp(1.1rem, 2.5vw, 2.75rem);
+  filter: none;
+  text-shadow: none;
 }
 
 .home-wordmark-caret {
