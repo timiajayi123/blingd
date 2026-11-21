@@ -109,6 +109,12 @@ export default function VisorLoader({
           style={{ isolation: "isolate" }}
         >
           <defs>
+            <filter id={`${maskId}-outline`} x="-5%" y="-5%" width="110%" height="110%">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="5" result="outline" />
+              <feFlood floodColor="#fff" result="white" />
+              <feComposite in="white" in2="outline" operator="in" result="whiteOutline" />
+              <feComposite in="SourceGraphic" in2="whiteOutline" operator="over" />
+            </filter>
             <clipPath id={maskId}>
               <path d="M188 383 C370 342 1068 342 1252 383 C1261 489 1240 625 1165 702 C1081 782 893 789 815 747 C780 727 765 670 730 650 C695 670 680 727 645 747 C567 789 379 782 295 702 C220 625 199 489 188 383 Z" />
             </clipPath>
@@ -131,7 +137,13 @@ export default function VisorLoader({
             </linearGradient>
           </defs>
 
-          <image href={imageSrc} x="0" y="0" width="1440" height="1080" preserveAspectRatio="xMidYMid meet" />
+          <image
+            href={imageSrc}
+            width="1440"
+            height="1080"
+            preserveAspectRatio="xMidYMid meet"
+            filter={`url(#${maskId}-outline)`}
+          />
 
           {/* The coloured glass is the starting state. */}
           <g clipPath={`url(#${maskId})`} style={{ mixBlendMode: "normal", opacity: 0.78 }}>
