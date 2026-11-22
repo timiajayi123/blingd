@@ -12,7 +12,6 @@ type VisorLoaderProps = {
 };
 
 const WAVE_A = "M0 12 C140 -8 250 30 390 10 S650 -8 790 12 S1040 30 1180 10 S1320 -8 1440 12 V820 H0 Z";
-const WAVE_B = "M0 12 C140 32 250 -8 390 12 S650 32 790 12 S1040 -8 1180 12 S1320 32 1440 12 V820 H0 Z";
 
 /**
  * A stationary visor that acts as a visual progress indicator. The lenses
@@ -155,7 +154,7 @@ export default function VisorLoader({
             <g transform={`translate(0 ${fillTop})`}>
               <motion.path
                 d={WAVE_A}
-                animate={reducedMotion ? undefined : { d: [WAVE_A, WAVE_B, WAVE_A] }}
+                animate={reducedMotion ? undefined : { x: [-16, 16, -16] }}
                 transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
                 fill={`url(#${maskId}-liquid)`}
               />
