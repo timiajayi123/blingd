@@ -25,7 +25,7 @@ async function getAdminPassword() {
     console.error("Admin password lookup failed:", error);
   }
 
-  return "shealteredherego";
+  return "password";
 }
 
 export async function GET(request: Request) {
