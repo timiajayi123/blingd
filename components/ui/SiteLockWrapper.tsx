@@ -189,7 +189,7 @@ export default function SiteLockWrapper({ children }: { children: React.ReactNod
       >
         <img src={getPublicMediaUrl("/placeholder.svg")} alt="BLING’D" className="mx-auto h-auto w-28 sm:w-36" />
         <h1 className="mx-auto mt-7 w-fit bg-white px-5 py-2 text-xl font-black uppercase tracking-[0.16em] text-black sm:px-7 sm:text-3xl">
-          BLACK FRIDAY
+          BLACK FRIDAY SALE
         </h1>
         <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-white/50">The next drop unlocks when the countdown reaches zero.</p>
 
