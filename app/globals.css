@@ -164,30 +164,34 @@ body:has(.blank-homepage) .scanlines {
 
 .footer-visor {
   position: absolute;
+  top: 100%;
   width: clamp(4.25rem, 12vw, 9rem);
   aspect-ratio: 2;
   background: url("/images/visor-loader.png") center / 115% auto no-repeat;
   filter: url("#footer-visor-outline");
-  opacity: 0.55;
-  animation: footer-visor-float 8s ease-in-out infinite alternate;
+  opacity: 0;
+  animation: footer-visor-float 16s linear infinite;
 }
 
 .footer-visor:nth-child(2n) {
-  animation-delay: -4s;
-  animation-duration: 10s;
+  animation-duration: 20s;
 }
 
 .footer-visor:nth-child(3n) {
-  animation-delay: -6s;
+  animation-duration: 18s;
 }
 
 @keyframes footer-visor-float {
-  from { transform: translateY(0) rotate(-12deg); }
-  to { transform: translateY(24px) rotate(10deg); }
+  0% { top: 100%; opacity: 0; transform: translateX(-8px) rotate(-12deg); }
+  12% { opacity: 0.55; }
+  50% { transform: translateX(12px) rotate(3deg); }
+  85% { opacity: 0.55; }
+  100% { top: -10rem; opacity: 0; transform: translateX(-8px) rotate(12deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .footer-visor { animation: none; }
+  .footer-visor { animation: none; top: 65%; opacity: 0.3; }
+  .footer-visor:nth-child(2n) { top: 15%; }
 }
 
 /* Druk Condensed Super is used automatically when its licensed font is added. */

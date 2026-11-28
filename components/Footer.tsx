@@ -23,10 +23,14 @@ export default function Footer() {
         </defs>
       </svg>
       <div aria-hidden="true" className="footer-visors">
-        <span className="footer-visor left-[9%] top-[9%]" />
-        <span className="footer-visor left-[42%] top-[20%]" />
-        <span className="footer-visor right-[10%] top-[8%]" />
-        <span className="footer-visor bottom-[4%] right-[20%]" />
+        <span className="footer-visor left-[2%]" style={{ animationDelay: '-2s' }} />
+        <span className="footer-visor left-[15%]" style={{ animationDelay: '-8s' }} />
+        <span className="footer-visor left-[28%]" style={{ animationDelay: '-13s' }} />
+        <span className="footer-visor left-[41%]" style={{ animationDelay: '-5s' }} />
+        <span className="footer-visor left-[54%]" style={{ animationDelay: '-11s' }} />
+        <span className="footer-visor left-[67%]" style={{ animationDelay: '-1s' }} />
+        <span className="footer-visor left-[80%]" style={{ animationDelay: '-9s' }} />
+        <span className="footer-visor right-[2%]" style={{ animationDelay: '-15s' }} />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-6 pb-8 pt-16 md:px-12 md:pb-10 md:pt-24 lg:px-20">
@@ -36,7 +40,7 @@ export default function Footer() {
               <span>B</span><span>L</span><span className="footer-brand-wordmark__inverted-i">i</span><span>N</span><span>G</span><span>&apos;</span><span>D</span>
             </span>
           </Link>
-          <nav aria-label="Customer links" className="mx-auto grid w-full max-w-xs grid-cols-2 gap-x-3 gap-y-3 text-center text-[10px] leading-5 text-white/70 sm:text-xs md:mx-0 md:min-w-72">
+          <nav aria-label="Customer links" className="mx-auto grid w-full max-w-md grid-cols-[auto_auto] justify-center gap-x-5 gap-y-5 text-center text-[12px] leading-6 text-white/85 sm:gap-x-8 sm:text-sm md:mx-0 md:min-w-80 md:text-base">
             <Link href="/contact" className="transition-colors hover:text-white">Contact us</Link>
             <Link href="/track-order" className="transition-colors hover:text-white">Track your order</Link>
             <Link href="/delivery-policy" className="col-span-2 justify-self-center transition-colors hover:text-white">Shipping Rules</Link>
