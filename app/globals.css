@@ -120,12 +120,26 @@ body:has(.blank-homepage) .scanlines {
 /* Follow transparent product silhouettes with a fine rim and a restrained halo. */
 .shop-product-cutout,
 .shop-product-images img {
-  filter:
-    drop-shadow(0.65px 0 0 rgb(255 255 255 / 0.85))
-    drop-shadow(-0.65px 0 0 rgb(255 255 255 / 0.85))
-    drop-shadow(0 0.65px 0 rgb(255 255 255 / 0.85))
-    drop-shadow(0 -0.65px 0 rgb(255 255 255 / 0.85))
-    drop-shadow(0 0 5px rgb(255 255 255 / 0.22));
+  --product-rim: 1px;
+  --product-outline-filter:
+    drop-shadow(var(--product-rim) 0 0 #fff)
+    drop-shadow(calc(-1 * var(--product-rim)) 0 0 #fff)
+    drop-shadow(0 var(--product-rim) 0 #fff)
+    drop-shadow(0 calc(-1 * var(--product-rim)) 0 #fff)
+    drop-shadow(0 0 6px rgba(255, 255, 255, 0.38));
+  -webkit-filter: var(--product-outline-filter);
+  filter: var(--product-outline-filter);
+}
+
+@media (max-width: 767px) {
+  .shop-product-cutout,
+  .shop-product-images img {
+    --product-rim: 1.75px;
+  }
+}
+
+.shop-product-images {
+  padding: 8px;
 }
 
 .shop-product-name,

@@ -12,7 +12,7 @@ export default function ShopSampleGrid() {
       <div className="grid grid-cols-2 gap-x-4 gap-y-12 sm:gap-x-8 sm:gap-y-20">
         {samples.map((product) => (
           <article key={product.name} className="min-w-0">
-            <div className="flex aspect-square items-center justify-center bg-transparent">
+            <div className="flex aspect-square items-center justify-center bg-transparent p-2">
               <img src="/images/visor-loader.png" alt={product.name} className="shop-product-cutout h-full w-full object-contain" />
             </div>
             <h2 className="shop-product-name mt-6">{product.name}</h2>
