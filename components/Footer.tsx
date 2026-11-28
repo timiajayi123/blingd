@@ -9,6 +9,19 @@ export default function Footer() {
 
   return (
     <footer className="relative isolate overflow-hidden bg-black text-white">
+      <svg width="0" height="0" aria-hidden="true" className="absolute">
+        <defs>
+          <filter id="footer-visor-outline" x="-10%" y="-10%" width="120%" height="120%" colorInterpolationFilters="sRGB">
+            <feMorphology in="SourceAlpha" operator="dilate" radius="1.25" result="expanded" />
+            <feFlood floodColor="white" result="white" />
+            <feComposite in="white" in2="expanded" operator="in" result="outline" />
+            <feMerge>
+              <feMergeNode in="outline" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+      </svg>
       <div aria-hidden="true" className="footer-visors">
         <span className="footer-visor left-[9%] top-[9%]" />
         <span className="footer-visor left-[42%] top-[20%]" />
@@ -23,7 +36,6 @@ export default function Footer() {
               <span>B</span><span>L</span><span className="footer-brand-wordmark__inverted-i">i</span><span>N</span><span>G</span><span>&apos;</span><span>D</span>
             </span>
           </Link>
-
           <nav aria-label="Customer links" className="mx-auto grid w-full max-w-xs grid-cols-2 gap-x-5 gap-y-3 text-center text-sm text-white/70 md:mx-0 md:min-w-72">
             <Link href="/contact" className="transition-colors hover:text-white">Contact us</Link>
             <Link href="/track-order" className="transition-colors hover:text-white">Track your order</Link>

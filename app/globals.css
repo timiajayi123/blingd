@@ -96,19 +96,26 @@ body:has(.blank-homepage) .scanlines {
   line-height: 1;
 }
 
+@font-face {
+  font-family: "Michroma";
+  src: url("/fonts/Michroma-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 .shop-product-name,
 .shop-price,
 .shop-price-prefix {
-  font-family: "Uni Sans Thin", "Uni Sans", "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+  font-family: "Michroma", sans-serif;
 }
 
 .shop-product-name {
   color: #fff;
   font-size: clamp(0.85rem, 1.3vw, 1.05rem);
-  font-weight: 500;
-  letter-spacing: -0.035em;
-  line-height: 1.1;
-  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.5;
 }
 
 .shop-price-prefix {
@@ -121,8 +128,8 @@ body:has(.blank-homepage) .scanlines {
 .shop-price {
   color: #fff;
   font-size: clamp(1.15rem, 1.75vw, 1.55rem);
-  font-weight: 600;
-  letter-spacing: -0.065em;
+  font-weight: 400;
+  letter-spacing: -0.04em;
   line-height: 1;
 }
 
@@ -157,11 +164,11 @@ body:has(.blank-homepage) .scanlines {
 
 .footer-visor {
   position: absolute;
-  width: clamp(3rem, 9vw, 7rem);
+  width: clamp(4.25rem, 12vw, 9rem);
   aspect-ratio: 2;
   background: url("/images/visor-loader.png") center / 115% auto no-repeat;
-  filter: brightness(1.65);
-  opacity: 0.32;
+  filter: url("#footer-visor-outline");
+  opacity: 0.55;
   animation: footer-visor-float 8s ease-in-out infinite alternate;
 }
 
