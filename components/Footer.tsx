@@ -3,12 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const footerLinks = [
-  { label: "Contact us", href: "/contact" },
-  { label: "Shipping Rules", href: "/delivery-policy" },
-  { label: "Track your order", href: "/track-order" },
-];
-
 export default function Footer() {
   const pathname = usePathname();
 
@@ -25,22 +19,20 @@ export default function Footer() {
             </span>
           </Link>
 
-          <nav aria-label="Customer links" className="flex flex-col items-start gap-3 md:items-end">
-            {footerLinks.map((link) => (
-              <Link key={link.href} href={link.href} className="text-sm text-black/60 transition-colors hover:text-black">
-                {link.label}
-              </Link>
-            ))}
+          <nav aria-label="Customer links" className="grid grid-cols-2 gap-x-8 gap-y-3 text-center text-sm text-black/60 md:min-w-72">
+            <Link href="/contact" className="transition-colors hover:text-black">Contact us</Link>
+            <Link href="/track-order" className="transition-colors hover:text-black">Track your order</Link>
+            <Link href="/delivery-policy" className="col-span-2 justify-self-center transition-colors hover:text-black">Shipping Rules</Link>
           </nav>
         </div>
 
-        <div className="border-t border-black/10 pt-6">
+        <div className="flex flex-wrap items-end justify-between gap-6 border-t border-black/10 pt-6">
           <a
             href="https://snapchat.com/t/Bt7uOu1M"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Visit TIMZI Web on Snapchat"
-            className="group mb-6 block w-fit transition-opacity hover:opacity-60"
+            className="group block w-fit transition-opacity hover:opacity-60"
           >
             <span
               className="mb-1.5 block text-[8px] uppercase tracking-[0.2em] text-black/50 md:text-[9px]"
@@ -56,8 +48,8 @@ export default function Footer() {
             </span>
           </a>
 
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-black/40">
-            <p>© {new Date().getFullYear()} BLING&apos;D. All rights reserved.</p>
+          <div className="pb-0.5 text-[10px] font-medium uppercase tracking-[0.18em] text-black/40">
+            <p>© 2026 BLING&apos;D</p>
           </div>
         </div>
       </div>

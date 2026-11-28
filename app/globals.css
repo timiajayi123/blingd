@@ -19,9 +19,44 @@ body:has(.blank-homepage) .scanlines {
   background: #fff;
 }
 
-.blank-homepage.has-carousel .home-brand-wordmark {
-  color: #fff;
-  text-shadow: 0 2px 24px rgb(0 0 0 / 0.55);
+/* A restrained travelling trace that frames the shop without covering its content. */
+.shop-edge-glow {
+  pointer-events: none;
+  position: fixed;
+  inset: 0.45rem;
+  z-index: 60;
+  overflow: hidden;
+  border: 1px solid rgb(0 0 0 / 0.22);
+  box-shadow: 0 0 12px rgb(0 0 0 / 0.07), inset 0 0 8px rgb(0 0 0 / 0.04);
+}
+
+.shop-edge-glow::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  padding: 2px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 245deg,
+    rgb(0 0 0 / 0.1) 275deg,
+    rgb(0 0 0 / 0.95) 310deg,
+    rgb(0 0 0 / 0.18) 340deg,
+    transparent 360deg
+  );
+  filter: drop-shadow(0 0 4px rgb(0 0 0 / 0.65));
+  animation: shop-edge-trace 7s linear infinite;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+@keyframes shop-edge-trace {
+  to { transform: rotate(1turn); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-edge-glow::before { animation: none; }
 }
 
 /* Tall, compressed wordmark styling used by the storefront title. */
@@ -47,10 +82,40 @@ body:has(.blank-homepage) .scanlines {
 
 .shop-script-wordmark {
   margin: 0;
-  color: #000;
+  color: #fff;
   font-family: var(--font-blingd-script), cursive;
   font-size: clamp(3.25rem, 9vw, 6rem);
   font-weight: 400;
+  line-height: 1;
+}
+
+.shop-product-name,
+.shop-price,
+.shop-price-prefix {
+  font-family: "Uni Sans Thin", "Uni Sans", "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+}
+
+.shop-product-name {
+  color: #fff;
+  font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.shop-price-prefix {
+  color: rgb(255 255 255 / 0.52);
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.16em;
+}
+
+.shop-price {
+  color: #fff;
+  font-size: clamp(1.15rem, 1.75vw, 1.55rem);
+  font-weight: 600;
+  letter-spacing: -0.065em;
   line-height: 1;
 }
 
@@ -129,17 +194,32 @@ body:has(.blank-homepage) .scanlines {
 .home-wordmark-lockup {
   position: relative;
   display: flex;
-  width: 100%;
+  width: 100vw;
   justify-content: center;
   isolation: isolate;
   overflow: visible;
 }
 
+.home-wordmark-be {
+  position: absolute;
+  z-index: 2;
+  top: clamp(-3.9rem, -8vw, -2.15rem);
+  left: clamp(29%, 24vw, 31%);
+  color: #111;
+  font-family: var(--font-blingd-script), cursive;
+  font-size: clamp(6.25rem, 16vw, 11.5rem);
+  font-weight: 300;
+  line-height: 0.76;
+  opacity: 1;
+  transform: translateX(-50%) scaleX(0.84);
+  transform-origin: left center;
+  white-space: nowrap;
+}
+
 .home-brand-wordmark {
   position: relative;
   z-index: 1;
-  left: 0;
-  translate: 0;
+  translate: clamp(2.75rem, 6vw, 6.5rem) clamp(1.1rem, 2.5vw, 2.75rem);
 }
 
 .home-wordmark-caret {

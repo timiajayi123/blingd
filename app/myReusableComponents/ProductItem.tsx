@@ -61,7 +61,7 @@ const ProductItem = memo(({
   const router = useRouter();
   const { addToCart, currency } = useCartStore();
   const isCategoryPage = pathname?.startsWith("/category");
-  const isStorefrontPage = pathname?.includes("storefront") || pathname?.includes("storefront");
+  const isStorefrontPage = pathname === "/store" || pathname?.startsWith("/storefront");
   const isRevoltPage = pathname?.includes("revolt");
 
   const textColor = isRevoltPage || isStorefrontPage ? "!text-white" : "!text-black";
@@ -975,24 +975,14 @@ const ProductItem = memo(({
 
       <CardFooter className={`flex flex-col gap-2 justify-between items-start w-full mt-auto ${isDenseMobile ? 'pt-1 px-2 pb-2' : 'pt-2 px-4 pb-4'} bg-transparent border-none`}>
         {isStorefrontPage ? (
-          <div className="flex flex-col items-center w-full text-center space-y-1 mt-4">
-            <h3 className="text-[10px] md:text-xs font-mono font-bold uppercase tracking-[0.1em] text-white leading-tight">
+          <div className="flex w-full flex-col items-start space-y-1 px-1 pt-3 text-left">
+            <h3 className="shop-product-name">
               {product.name}
             </h3>
-            {variants.length > 1 ? (
-              <p className="text-[10px] md:text-xs font-mono font-medium uppercase tracking-[0.1em] text-cyan-300 drop-shadow-[0_0_8px_rgba(103,232,249,0.8)]">
-                [{Array.isArray(variants[0]?.colors) ? variants[0].colors[0] : variants[0]?.colors} n {Array.isArray(variants[1]?.colors) ? variants[1].colors[0] : variants[1]?.colors}]
-              </p>
-            ) : product.colors && (Array.isArray(product.colors) ? product.colors.length > 0 : !!product.colors) && (
-              <p className="text-[10px] md:text-xs font-mono font-medium uppercase tracking-[0.1em] text-cyan-300 drop-shadow-[0_0_8px_rgba(103,232,249,0.8)]">
-                [{Array.isArray(product.colors) ? product.colors[0] : product.colors}]
-              </p>
-            )}
-            <div className="flex flex-col items-center gap-1 w-full pt-1">
-              <span className="text-[10px] md:text-xs font-mono font-medium uppercase tracking-[0.1em] text-white">
-                {formatCurrency(product.price, currency)}
-              </span>
-            </div>
+            <p className="pt-1">
+              <span className="shop-price-prefix">FROM</span>
+              <span className="shop-price"> {formatCurrency(product.price, currency)}</span>
+            </p>
           </div>
         ) : (
           <>

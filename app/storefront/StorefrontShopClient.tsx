@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { LayoutGrid, Square } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
-import { useCartStore } from "@/app/Store/CartStore";
 
 import { ensureArray } from "@/lib/mapAppwriteProduct";
 
@@ -42,17 +41,9 @@ function ShopWordmark() {
 export default function StorefrontShopClient({
   products,
   categories,
-  backgroundType,
-  backgroundVideoUrl,
-  backgroundPosterUrl,
-  backgroundImageUrl,
 }: {
   products: Product[];
   categories: any[];
-  backgroundType: "video" | "image";
-  backgroundVideoUrl: string;
-  backgroundPosterUrl?: string;
-  backgroundImageUrl?: string;
 }) {
   const [mappedProducts, setMappedProducts] = useState<Product[]>(() => mapProducts(products));
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(() => mapProducts(products));
@@ -60,6 +51,7 @@ export default function StorefrontShopClient({
   const [isOpen, setIsOpen] = useState(false);
   const [layout, setLayout] = useState<'grid-1' | 'grid-2'>('grid-2');
   const [showCounter, setShowCounter] = useState(false);
+  const isDevelopment = process.env.NODE_ENV === "development";
 
   useEffect(() => {
     // Dismiss the loading toast when this component mounts
@@ -175,7 +167,7 @@ export default function StorefrontShopClient({
 
   if (mappedProducts.length === 0) {
     return (
-      <div className="relative z-10 min-h-[100dvh] bg-white text-black">
+      <div className="shop-page relative z-10 min-h-[100dvh] bg-black text-white">
         <div className="relative flex flex-col items-center text-center">
           <ShopWordmark />
           <div className="relative mt-2 flex w-full flex-col items-center">
@@ -184,9 +176,9 @@ export default function StorefrontShopClient({
               className="group relative z-30 flex touch-manipulation flex-col items-center justify-center gap-2 p-8 transition-transform active:scale-95"
               aria-label={isOpen ? "Close Menu" : "Open Menu"}
             >
-              <motion.div animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }} className="h-0.5 w-12 bg-black transition-all group-hover:w-16" />
-              <motion.div animate={isOpen ? { opacity: 0, x: 20 } : { opacity: 1, x: 0 }} className="h-0.5 w-12 bg-black transition-all group-hover:w-16" />
-              <motion.div animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }} className="h-0.5 w-12 bg-black transition-all group-hover:w-16" />
+              <motion.div animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }} className="h-0.5 w-12 bg-white transition-all group-hover:w-16" />
+              <motion.div animate={isOpen ? { opacity: 0, x: 20 } : { opacity: 1, x: 0 }} className="h-0.5 w-12 bg-white transition-all group-hover:w-16" />
+              <motion.div animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }} className="h-0.5 w-12 bg-white transition-all group-hover:w-16" />
             </button>
 
             <AnimatePresence>
@@ -233,6 +225,16 @@ export default function StorefrontShopClient({
               )}
             </AnimatePresence>
           </div>
+          {isDevelopment && (
+            <div className="mx-auto mt-12 w-full max-w-sm px-5 text-left">
+              <div className="aspect-square bg-zinc-950 p-8">
+                <img src="/placeholder.svg" alt="Test product" className="h-full w-full object-contain" />
+              </div>
+              <p className="shop-product-name mt-5">NIGHTFRAME TEE</p>
+              <p className="mt-2"><span className="shop-price-prefix">FROM</span><span className="shop-price"> ₦28,000</span></p>
+              <p className="mt-3 text-[10px] uppercase tracking-[0.18em] text-white/35">Local style preview only</p>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -241,7 +243,7 @@ export default function StorefrontShopClient({
   const currentDisplayProducts = filteredProducts;
 
   return (
-    <div className="relative z-10 min-h-[100dvh] space-y-4 bg-white text-black">
+    <div className="shop-page relative z-10 min-h-[100dvh] space-y-4 bg-black text-white">
 
       {/* Force hide global overlays for a totally white look */}
       <style jsx global>{`
@@ -263,15 +265,15 @@ export default function StorefrontShopClient({
           >
             <motion.div 
               animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-              className="h-0.5 w-12 bg-black transition-all group-hover:w-16" 
+              className="h-0.5 w-12 bg-white transition-all group-hover:w-16"
             />
             <motion.div 
               animate={isOpen ? { opacity: 0, x: 20 } : { opacity: 1, x: 0 }}
-              className="h-0.5 w-12 bg-black transition-all group-hover:w-16" 
+              className="h-0.5 w-12 bg-white transition-all group-hover:w-16"
             />
             <motion.div 
               animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-              className="h-0.5 w-12 bg-black transition-all group-hover:w-16" 
+              className="h-0.5 w-12 bg-white transition-all group-hover:w-16"
             />
           </button>
 
@@ -342,7 +344,7 @@ export default function StorefrontShopClient({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              className="mt-4 text-[9px] font-mono tracking-[0.5em] text-black uppercase font-bold italic"
+              className="mt-4 text-[9px] font-mono tracking-[0.5em] text-white/65 uppercase font-bold italic"
             >
               {currentDisplayProducts.length} {activeCategory ? activeCategory.toUpperCase() : "ASSETS"}
             </motion.div>
@@ -353,17 +355,17 @@ export default function StorefrontShopClient({
       {/* Shop controls */}
       <div className="flex justify-end items-center mb-4 px-2">
         {/* Layout Toggle */}
-        <div className="inline-flex rounded-lg border border-black/20 bg-transparent p-1 md:hidden">
+        <div className="inline-flex rounded-lg border border-white/25 bg-transparent p-1 md:hidden">
           <button 
             onClick={() => setLayout('grid-2')}
-            className={`p-2 rounded-md transition-all ${layout === 'grid-2' ? 'bg-black text-white shadow-md' : 'text-black/40 hover:text-black'}`}
+            className={`p-2 rounded-md transition-all ${layout === 'grid-2' ? 'bg-white text-black shadow-md' : 'text-white/40 hover:text-white'}`}
             aria-label="2x2 Grid"
           >
             <LayoutGrid size={18} />
           </button>
           <button 
             onClick={() => setLayout('grid-1')}
-            className={`p-2 rounded-md transition-all ${layout === 'grid-1' ? 'bg-black text-white shadow-md' : 'text-black/40 hover:text-black'}`}
+            className={`p-2 rounded-md transition-all ${layout === 'grid-1' ? 'bg-white text-black shadow-md' : 'text-white/40 hover:text-white'}`}
             aria-label="1x1 Grid"
           >
             <Square size={18} />

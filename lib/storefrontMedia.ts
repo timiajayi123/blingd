@@ -11,7 +11,6 @@ export type StorefrontMedia = {
   homeVideoFileId: string;
   homePosterUrl: string;
   homeImageUrl: string;
-  homeCarouselUrls: string[];
   shopBackgroundType: "video" | "image";
   shopVideoUrl: string;
   shopVideoFileId: string;
@@ -27,7 +26,6 @@ export const DEFAULT_STOREFRONT_MEDIA: StorefrontMedia = {
   homeVideoFileId: "",
   homePosterUrl: "",
   homeImageUrl: "",
-  homeCarouselUrls: [],
   shopBackgroundType: "video",
   shopVideoUrl: getPublicMediaUrl(""),
   shopVideoFileId: "",
@@ -41,7 +39,7 @@ const BACKGROUND_IMAGE_STATE_PREFIX = "storefront-background-image:";
 
 function readBackgroundImageState(value: unknown) {
   if (typeof value !== "string" || !value.startsWith(BACKGROUND_IMAGE_STATE_PREFIX)) {
-    return { backgroundType: "video" as const, imageUrl: "", carouselUrls: [] as string[], cartImageUrl: "", headerImageUrl: "", posterUrl: cleanUrl(value) };
+    return { backgroundType: "video" as const, imageUrl: "", cartImageUrl: "", headerImageUrl: "", posterUrl: cleanUrl(value) };
   }
 
   try {
@@ -49,15 +47,12 @@ function readBackgroundImageState(value: unknown) {
     return {
       backgroundType: data?.backgroundType === "image" ? "image" as const : "video" as const,
       imageUrl: getBackgroundImageUrl(cleanUrl(data?.imageUrl)),
-      carouselUrls: Array.isArray(data?.carouselUrls)
-        ? data.carouselUrls.map((url: unknown) => getBackgroundImageUrl(cleanUrl(url))).filter(Boolean)
-        : [],
       cartImageUrl: getBackgroundImageUrl(cleanUrl(data?.cartImageUrl)),
       headerImageUrl: getBackgroundImageUrl(cleanUrl(data?.headerImageUrl)),
       posterUrl: "",
     };
   } catch {
-    return { backgroundType: "video" as const, imageUrl: "", carouselUrls: [] as string[], cartImageUrl: "", headerImageUrl: "", posterUrl: "" };
+    return { backgroundType: "video" as const, imageUrl: "", cartImageUrl: "", headerImageUrl: "", posterUrl: "" };
   }
 }
 
@@ -89,7 +84,6 @@ const readStorefrontMedia = async (): Promise<StorefrontMedia> => {
       homeVideoFileId: cleanUrl(settings.homeVideoFileId),
       homePosterUrl: homeImageState.posterUrl,
       homeImageUrl: homeImageState.imageUrl,
-      homeCarouselUrls: homeImageState.carouselUrls,
       shopBackgroundType: shopImageState.backgroundType,
       shopVideoUrl: cleanUrl(
         settings.shopVideoUrl,
