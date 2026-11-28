@@ -18,12 +18,25 @@ body:has(.blank-homepage) .scanlines {
   min-height: 100dvh;
   background-color: #101010;
   background-image:
-    linear-gradient(to bottom, transparent 64%, #000),
+    linear-gradient(to bottom, transparent 40%, rgb(0 0 0 / 0.15) 60%, rgb(0 0 0 / 0.65) 80%, #000 98%),
     linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.04)),
     url("/images/IMG_2793.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.home-shop-icon {
+  animation: home-shop-glow 3.4s ease-in-out infinite;
+}
+
+@keyframes home-shop-glow {
+  0%, 100% { filter: drop-shadow(0 0 2px rgb(255 255 255 / 0.15)); }
+  50% { filter: drop-shadow(0 0 6px rgb(255 255 255 / 0.65)) drop-shadow(0 0 14px rgb(255 255 255 / 0.2)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-shop-icon { animation: none; }
 }
 
 /* A restrained travelling trace that frames the shop without covering its content. */
@@ -171,6 +184,8 @@ body:has(.blank-homepage) .scanlines {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%);
+  mask-image: linear-gradient(to bottom, transparent, #000 18%);
 }
 
 .footer-visor {

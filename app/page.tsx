@@ -28,7 +28,7 @@ export default function Home() {
           title="Shop"
           className="grid h-16 w-16 translate-y-16 place-items-center bg-transparent text-white transition hover:scale-105 hover:opacity-55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-black"
         >
-          <ShoppingBag size={38} strokeWidth={1.5} aria-hidden="true" />
+          <ShoppingBag size={38} strokeWidth={1.5} aria-hidden="true" className="home-shop-icon" />
         </Link>
       </div>
     </section>
