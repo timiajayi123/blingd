@@ -980,8 +980,7 @@ const ProductItem = memo(({
               {product.name}
             </h3>
             <p className="pt-1">
-              <span className="shop-price-prefix">FROM</span>
-              <span className="shop-price"> {formatCurrency(product.price, currency)}</span>
+              <span className="shop-price">{formatCurrency(product.price, currency)}</span>
             </p>
           </div>
         ) : (

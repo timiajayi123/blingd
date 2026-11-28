@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import ProductItem from "@/app/myReusableComponents/ProductItem";
 import { motion, AnimatePresence } from "framer-motion";
-import { LayoutGrid, Square } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 
@@ -49,7 +48,6 @@ export default function StorefrontShopClient({
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(() => mapProducts(products));
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [layout, setLayout] = useState<'grid-1' | 'grid-2'>('grid-2');
   const [showCounter, setShowCounter] = useState(false);
   const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -231,7 +229,7 @@ export default function StorefrontShopClient({
                 <img src="/placeholder.svg" alt="Test product" className="h-full w-full object-contain" />
               </div>
               <p className="shop-product-name mt-5">NIGHTFRAME TEE</p>
-              <p className="mt-2"><span className="shop-price-prefix">FROM</span><span className="shop-price"> ₦28,000</span></p>
+              <p className="mt-2 shop-price">₦28,000</p>
               <p className="mt-3 text-[10px] uppercase tracking-[0.18em] text-white/35">Local style preview only</p>
             </div>
           )}
@@ -352,33 +350,8 @@ export default function StorefrontShopClient({
         </AnimatePresence>
       </div>
 
-      {/* Shop controls */}
-      <div className="flex justify-end items-center mb-4 px-2">
-        {/* Layout Toggle */}
-        <div className="inline-flex rounded-lg border border-white/25 bg-transparent p-1 md:hidden">
-          <button 
-            onClick={() => setLayout('grid-2')}
-            className={`p-2 rounded-md transition-all ${layout === 'grid-2' ? 'bg-white text-black shadow-md' : 'text-white/40 hover:text-white'}`}
-            aria-label="2x2 Grid"
-          >
-            <LayoutGrid size={18} />
-          </button>
-          <button 
-            onClick={() => setLayout('grid-1')}
-            className={`p-2 rounded-md transition-all ${layout === 'grid-1' ? 'bg-white text-black shadow-md' : 'text-white/40 hover:text-white'}`}
-            aria-label="1x1 Grid"
-          >
-            <Square size={18} />
-          </button>
-        </div>
-      </div>
-
       <div
-        className={`grid gap-x-4 gap-y-12 sm:gap-x-8 sm:gap-y-20 ${
-          layout === 'grid-2' 
-            ? 'grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
-            : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
-        }`}
+        className="grid grid-cols-2 gap-x-4 gap-y-12 sm:gap-x-8 sm:gap-y-20"
       >
         <AnimatePresence mode="popLayout">
           {currentDisplayProducts.map((product) => (
@@ -393,8 +366,8 @@ export default function StorefrontShopClient({
               <ProductItem 
                 product={product} 
                 variants={[product]}
-                isDenseMobile={layout === 'grid-2'}
-                compact={layout === 'grid-2'}
+                isDenseMobile
+                compact
               />
             </motion.div>
           ))}
