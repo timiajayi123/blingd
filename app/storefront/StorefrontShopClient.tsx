@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import ProductItem from "@/app/myReusableComponents/ProductItem";
+import ShopSampleGrid from "@/components/shop/ShopSampleGrid";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -49,7 +50,6 @@ export default function StorefrontShopClient({
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [showCounter, setShowCounter] = useState(false);
-  const isDevelopment = process.env.NODE_ENV === "development";
 
   useEffect(() => {
     // Dismiss the loading toast when this component mounts
@@ -223,16 +223,7 @@ export default function StorefrontShopClient({
               )}
             </AnimatePresence>
           </div>
-          {isDevelopment && (
-            <div className="mx-auto mt-12 w-full max-w-sm px-5 text-left">
-              <div className="aspect-square bg-zinc-950 p-8">
-                <img src="/placeholder.svg" alt="Test product" className="h-full w-full object-contain" />
-              </div>
-              <p className="shop-product-name mt-5">NIGHTFRAME TEE</p>
-              <p className="mt-2 shop-price">₦28,000</p>
-              <p className="mt-3 text-[10px] uppercase tracking-[0.18em] text-white/35">Local style preview only</p>
-            </div>
-          )}
+          <ShopSampleGrid />
         </div>
       </div>
     );
@@ -350,6 +341,7 @@ export default function StorefrontShopClient({
         </AnimatePresence>
       </div>
 
+      <ShopSampleGrid />
       <div
         className="grid grid-cols-2 gap-x-4 gap-y-12 sm:gap-x-8 sm:gap-y-20"
       >
