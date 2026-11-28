@@ -12,7 +12,6 @@ type VisorLoaderProps = {
 };
 
 const WAVE_A = "M0 12 C140 -8 250 30 390 10 S650 -8 790 12 S1040 30 1180 10 S1320 -8 1440 12 V820 H0 Z";
-const WAVE_B = "M0 12 C140 32 250 -8 390 12 S650 32 790 12 S1040 -8 1180 12 S1320 32 1440 12 V820 H0 Z";
 
 /**
  * A stationary visor that acts as a visual progress indicator. The lenses
@@ -109,6 +108,12 @@ export default function VisorLoader({
           style={{ isolation: "isolate" }}
         >
           <defs>
+            <filter id={`${maskId}-outline`} x="-5%" y="-5%" width="110%" height="110%">
+              <feMorphology in="SourceAlpha" operator="dilate" radius="5" result="outline" />
+              <feFlood floodColor="#fff" result="white" />
+              <feComposite in="white" in2="outline" operator="in" result="whiteOutline" />
+              <feComposite in="SourceGraphic" in2="whiteOutline" operator="over" />
+            </filter>
             <clipPath id={maskId}>
               <path d="M188 383 C370 342 1068 342 1252 383 C1261 489 1240 625 1165 702 C1081 782 893 789 815 747 C780 727 765 670 730 650 C695 670 680 727 645 747 C567 789 379 782 295 702 C220 625 199 489 188 383 Z" />
             </clipPath>
@@ -131,7 +136,13 @@ export default function VisorLoader({
             </linearGradient>
           </defs>
 
-          <image href={imageSrc} x="0" y="0" width="1440" height="1080" preserveAspectRatio="xMidYMid meet" />
+          <image
+            href={imageSrc}
+            width="1440"
+            height="1080"
+            preserveAspectRatio="xMidYMid meet"
+            filter={`url(#${maskId}-outline)`}
+          />
 
           {/* The coloured glass is the starting state. */}
           <g clipPath={`url(#${maskId})`} style={{ mixBlendMode: "normal", opacity: 0.78 }}>
@@ -143,7 +154,7 @@ export default function VisorLoader({
             <g transform={`translate(0 ${fillTop})`}>
               <motion.path
                 d={WAVE_A}
-                animate={reducedMotion ? undefined : { d: [WAVE_A, WAVE_B, WAVE_A] }}
+                animate={reducedMotion ? undefined : { x: [-16, 16, -16] }}
                 transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
                 fill={`url(#${maskId}-liquid)`}
               />

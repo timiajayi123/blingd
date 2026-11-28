@@ -16,7 +16,7 @@ export default function Home() {
       <Link
         href="/cart"
         aria-label="Open shopping bag"
-        className="absolute right-5 top-5 z-20 grid h-16 w-16 place-items-center text-black transition duration-300 hover:-translate-y-0.5 hover:opacity-55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4 sm:right-8 sm:top-8"
+        className="absolute right-5 top-5 z-20 grid h-16 w-16 place-items-center text-white transition duration-300 hover:-translate-y-0.5 hover:opacity-55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-black sm:right-8 sm:top-8"
       >
         <ShoppingCart size={32} strokeWidth={1.55} aria-hidden="true" />
       </Link>
@@ -26,7 +26,7 @@ export default function Home() {
           href="/store"
           aria-label="Open shop"
           title="Shop"
-          className="grid h-16 w-16 translate-y-16 place-items-center bg-transparent text-black transition hover:scale-105 hover:opacity-55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-4"
+          className="grid h-16 w-16 translate-y-16 place-items-center bg-transparent text-white transition hover:scale-105 hover:opacity-55 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-4 focus-visible:ring-offset-black"
         >
           <ShoppingBag size={38} strokeWidth={1.5} aria-hidden="true" />
         </Link>

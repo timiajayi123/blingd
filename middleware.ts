@@ -21,13 +21,11 @@ const NOINDEX_PATHS = [
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
+  const isCrawlerFile = pathname === "/sitemap.xml" || pathname === "/robots.txt";
 
-  if (
-    request.nextUrl.hostname === "example.com" &&
-    !pathname.startsWith("/.well-known/")
-  ) {
+  if (request.nextUrl.hostname === "www.blingd.ng" && !isCrawlerFile) {
     const canonicalUrl = request.nextUrl.clone();
-    canonicalUrl.hostname = "www.example.com";
+    canonicalUrl.hostname = "blingd.ng";
     return NextResponse.redirect(canonicalUrl, 308);
   }
 
