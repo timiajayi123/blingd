@@ -104,6 +104,17 @@ body:has(.blank-homepage) .scanlines {
   font-display: swap;
 }
 
+/* Follow transparent product silhouettes with a fine rim and a restrained halo. */
+.shop-product-cutout,
+.shop-product-images img {
+  filter:
+    drop-shadow(0.65px 0 0 rgb(255 255 255 / 0.85))
+    drop-shadow(-0.65px 0 0 rgb(255 255 255 / 0.85))
+    drop-shadow(0 0.65px 0 rgb(255 255 255 / 0.85))
+    drop-shadow(0 -0.65px 0 rgb(255 255 255 / 0.85))
+    drop-shadow(0 0 5px rgb(255 255 255 / 0.22));
+}
+
 .shop-product-name,
 .shop-price,
 .shop-price-prefix {

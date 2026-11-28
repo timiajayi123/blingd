@@ -733,7 +733,7 @@ const ProductItem = memo(({
         </CardHeader>
       )}
 
-      <CardContent className="flex-1 p-0 flex flex-col bg-transparent">
+      <CardContent className={`flex-1 p-0 flex flex-col bg-transparent ${isStorefrontPage ? "shop-product-images" : ""}`}>
         {!isComingSoon ? (
           <Link href={`/product-details/${product.$id}`} prefetch={true} className="flex-1">
             {/* Fix: Ensure only one image is visible and images do not overlap */}

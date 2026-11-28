@@ -13,7 +13,7 @@ export default function ShopSampleGrid() {
         {samples.map((product) => (
           <article key={product.name} className="min-w-0">
             <div className="flex aspect-square items-center justify-center bg-transparent">
-              <img src="/images/visor-loader.png" alt={product.name} className="h-full w-full object-contain" />
+              <img src="/images/visor-loader.png" alt={product.name} className="shop-product-cutout h-full w-full object-contain" />
             </div>
             <h2 className="shop-product-name mt-6">{product.name}</h2>
             <p className="shop-price mt-3">{product.price}</p>
