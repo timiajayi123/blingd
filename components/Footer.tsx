@@ -3,17 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const navigationLinks = [
-  { label: "Home", href: "/" },
-  { label: "Shop", href: "/store" },
-  { label: "Cart", href: "/cart" },
-];
-
-const informationLinks = [
-  { label: "Contact", href: "/contact" },
-  { label: "Privacy", href: "/privacy" },
-  { label: "Terms", href: "/terms" },
+const footerLinks = [
+  { label: "Contact us", href: "/contact" },
   { label: "Shipping Rules", href: "/delivery-policy" },
+  { label: "Track your order", href: "/track-order" },
 ];
 
 export default function Footer() {
@@ -32,29 +25,13 @@ export default function Footer() {
             </span>
           </Link>
 
-          <div className="grid grid-cols-2 gap-12 sm:gap-20">
-            <nav aria-label="Footer navigation">
-              <p className="mb-4 text-[9px] font-semibold uppercase tracking-[0.22em] text-black/30">Navigate</p>
-              <div className="flex flex-col items-start gap-3">
-                {navigationLinks.map((link) => (
-                  <Link key={link.href} href={link.href} className="text-sm text-black/60 transition-colors hover:text-black">
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </nav>
-
-            <nav aria-label="Information">
-              <p className="mb-4 text-[9px] font-semibold uppercase tracking-[0.22em] text-black/30">Information</p>
-              <div className="flex flex-col items-start gap-3">
-                {informationLinks.map((link) => (
-                  <Link key={link.href} href={link.href} className="text-sm text-black/60 transition-colors hover:text-black">
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </nav>
-          </div>
+          <nav aria-label="Customer links" className="flex flex-col items-start gap-3 md:items-end">
+            {footerLinks.map((link) => (
+              <Link key={link.href} href={link.href} className="text-sm text-black/60 transition-colors hover:text-black">
+                {link.label}
+              </Link>
+            ))}
+          </nav>
         </div>
 
         <div className="border-t border-black/10 pt-6">
@@ -79,11 +56,8 @@ export default function Footer() {
             </span>
           </a>
 
-          <div className="flex flex-col gap-5 text-[10px] font-medium uppercase tracking-[0.18em] text-black/40 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
-              <p>© {new Date().getFullYear()} BLING&apos;D. All rights reserved.</p>
-              <Link href="/admin" className="transition-colors hover:text-black">Admin</Link>
-            </div>
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-black/40">
+            <p>© {new Date().getFullYear()} BLING&apos;D. All rights reserved.</p>
           </div>
         </div>
       </div>

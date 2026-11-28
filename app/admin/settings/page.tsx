@@ -36,6 +36,7 @@ type StorefrontMediaState = {
   homeVideoFileId: string;
   homePosterUrl: string;
   homeImageUrl: string;
+  homeCarouselUrls: string[];
   shopBackgroundType: BackgroundType;
   shopVideoUrl: string;
   shopVideoFileId: string;
@@ -52,6 +53,7 @@ const defaultMedia: StorefrontMediaState = {
   homeVideoFileId: "",
   homePosterUrl: "",
   homeImageUrl: "",
+  homeCarouselUrls: [],
   shopBackgroundType: "video",
   shopVideoUrl: getPublicMediaUrl(""),
   shopVideoFileId: "",
@@ -66,7 +68,7 @@ const BACKGROUND_IMAGE_STATE_PREFIX = "storefront-background-image:";
 
 function readBackgroundImageState(value: unknown) {
   if (typeof value !== "string" || !value.startsWith(BACKGROUND_IMAGE_STATE_PREFIX)) {
-    return { backgroundType: "video" as const, imageUrl: "", cartImageUrl: "", headerImageUrl: "", posterUrl: typeof value === "string" ? value : "" };
+    return { backgroundType: "video" as const, imageUrl: "", carouselUrls: [] as string[], cartImageUrl: "", headerImageUrl: "", posterUrl: typeof value === "string" ? value : "" };
   }
 
   try {
@@ -74,17 +76,18 @@ function readBackgroundImageState(value: unknown) {
     return {
       backgroundType: data?.backgroundType === "image" ? "image" as const : "video" as const,
       imageUrl: typeof data?.imageUrl === "string" ? data.imageUrl : "",
+      carouselUrls: Array.isArray(data?.carouselUrls) ? data.carouselUrls.filter((url: unknown): url is string => typeof url === "string") : [],
       cartImageUrl: typeof data?.cartImageUrl === "string" ? data.cartImageUrl : "",
       headerImageUrl: typeof data?.headerImageUrl === "string" ? data.headerImageUrl : "",
       posterUrl: "",
     };
   } catch {
-    return { backgroundType: "video" as const, imageUrl: "", cartImageUrl: "", headerImageUrl: "", posterUrl: "" };
+    return { backgroundType: "video" as const, imageUrl: "", carouselUrls: [] as string[], cartImageUrl: "", headerImageUrl: "", posterUrl: "" };
   }
 }
 
-function writeBackgroundImageState(backgroundType: BackgroundType, imageUrl: string, cartImageUrl: string, headerImageUrl = "") {
-  return `${BACKGROUND_IMAGE_STATE_PREFIX}${JSON.stringify({ backgroundType, imageUrl, cartImageUrl, headerImageUrl })}`;
+function writeBackgroundImageState(backgroundType: BackgroundType, imageUrl: string, carouselUrls: string[], cartImageUrl: string, headerImageUrl = "") {
+  return `${BACKGROUND_IMAGE_STATE_PREFIX}${JSON.stringify({ backgroundType, imageUrl, carouselUrls, cartImageUrl, headerImageUrl })}`;
 }
 
 function getBackgroundType(media: StorefrontMediaState, slot: MediaSlot): BackgroundType {
@@ -122,6 +125,7 @@ export default function AdminSettings() {
   const [uploadingMedia, setUploadingMedia] = useState(false);
   const [savingMedia, setSavingMedia] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadingCarousel, setUploadingCarousel] = useState(false);
   const [pushStatus, setPushStatus] = useState<"checking" | "unsupported" | "disabled" | "enabled" | "denied" | "misconfigured">("checking");
   const [pushBusy, setPushBusy] = useState(false);
 
@@ -162,6 +166,7 @@ export default function AdminSettings() {
             homeVideoFileId: settings.homeVideoFileId || "",
             homePosterUrl: homeImageState.posterUrl,
             homeImageUrl: homeImageState.imageUrl,
+            homeCarouselUrls: homeImageState.carouselUrls,
             shopBackgroundType: shopImageState.backgroundType,
             shopVideoUrl: getOriginalVideoUrl(settings.shopVideoUrl || defaultMedia.shopVideoUrl),
             shopVideoFileId: settings.shopVideoFileId || "",
@@ -485,10 +490,10 @@ export default function AdminSettings() {
       const normalizedMedia = {
         homeVideoUrl: getOriginalVideoUrl(media.homeVideoUrl),
         homeVideoFileId: media.homeVideoFileId,
-        homePosterUrl: writeBackgroundImageState(media.homeBackgroundType, media.homeImageUrl, media.cartImageUrl),
+        homePosterUrl: writeBackgroundImageState(media.homeBackgroundType, media.homeImageUrl, media.homeCarouselUrls, media.cartImageUrl),
         shopVideoUrl: getOriginalVideoUrl(media.shopVideoUrl),
         shopVideoFileId: media.shopVideoFileId,
-        shopPosterUrl: writeBackgroundImageState(media.shopBackgroundType, media.shopImageUrl, "", media.headerImageUrl),
+        shopPosterUrl: writeBackgroundImageState(media.shopBackgroundType, media.shopImageUrl, [], "", media.headerImageUrl),
       };
       const response = await fetch("/api/admin", {
         method: "POST",
@@ -512,6 +517,59 @@ export default function AdminSettings() {
       setMediaModalOpen(false);
     } catch (error: any) {
       toast.error(error.message || "Could not save storefront media");
+    } finally {
+      setSavingMedia(false);
+    }
+  };
+
+  const handleCarouselUpload = async (file?: File) => {
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      toast.error("Choose a JPG, PNG, or WebP image file");
+      return;
+    }
+    if (media.homeCarouselUrls.length >= 6) {
+      toast.error("A maximum of six carousel images is allowed");
+      return;
+    }
+
+    setUploadingCarousel(true);
+    try {
+      const prepared = await prepareImageKitImage(file);
+      const result = await uploadAdminMedia({
+        file: prepared.file,
+        folder: "/storefront/storefront/home-carousel",
+        tags: ["storefront", "home", "carousel"],
+      });
+      setMedia((current) => ({ ...current, homeCarouselUrls: [...current.homeCarouselUrls, result.url] }));
+      toast.success("Carousel image uploaded. Save carousel to publish it.");
+    } catch (error: any) {
+      toast.error(error.message || "ImageKit upload failed");
+    } finally {
+      setUploadingCarousel(false);
+    }
+  };
+
+  const saveCarousel = async () => {
+    setSavingMedia(true);
+    try {
+      const response = await fetch("/api/admin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "update",
+          collection: "settings",
+          id: "global_settings",
+          data: {
+            homePosterUrl: writeBackgroundImageState(media.homeBackgroundType, media.homeImageUrl, media.homeCarouselUrls, media.cartImageUrl),
+          },
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "Could not save carousel");
+      toast.success("Homepage carousel updated");
+    } catch (error: any) {
+      toast.error(error.message || "Could not save carousel");
     } finally {
       setSavingMedia(false);
     }
@@ -695,6 +753,90 @@ export default function AdminSettings() {
               </button>
             );
           })}
+        </div>
+      </section>
+
+      <section className="border border-zinc-200 bg-white p-6 shadow-sm md:p-8">
+        <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+          <div>
+            <div className="mb-2 flex items-center gap-2 text-zinc-500">
+              <ImageIcon size={16} />
+              <span className="text-[10px] font-bold uppercase tracking-widest">Homepage</span>
+            </div>
+            <h2 className="text-xl font-semibold">Hero carousel</h2>
+            <p className="mt-1 text-sm text-zinc-500">Upload up to six images. They rotate automatically on the homepage in this order.</p>
+          </div>
+          <label className="inline-flex h-11 cursor-pointer items-center justify-center gap-2 bg-black px-5 text-[10px] font-bold uppercase tracking-widest text-white transition hover:bg-zinc-800">
+            {uploadingCarousel ? <Loader2 size={15} className="animate-spin" /> : <UploadCloud size={15} />}
+            {uploadingCarousel ? "Uploading" : "Add image"}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              className="hidden"
+              disabled={uploadingCarousel || media.homeCarouselUrls.length >= 6}
+              onChange={(event) => {
+                handleCarouselUpload(event.target.files?.[0]);
+                event.currentTarget.value = "";
+              }}
+            />
+          </label>
+        </div>
+
+        {media.homeCarouselUrls.length ? (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {media.homeCarouselUrls.map((url, index) => (
+              <div key={url} className="overflow-hidden border border-zinc-200 bg-zinc-50">
+                <img src={getBackgroundImageUrl(url)} alt={`Carousel image ${index + 1}`} className="aspect-[4/3] w-full object-cover" />
+                <div className="flex items-center justify-between gap-2 p-3">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Slide {index + 1}</span>
+                  <div className="flex items-center gap-1">
+                    <button
+                      type="button"
+                      aria-label={`Move slide ${index + 1} earlier`}
+                      disabled={index === 0}
+                      onClick={() => setMedia((current) => {
+                        const urls = [...current.homeCarouselUrls];
+                        [urls[index - 1], urls[index]] = [urls[index], urls[index - 1]];
+                        return { ...current, homeCarouselUrls: urls };
+                      })}
+                      className="h-8 w-8 border border-zinc-200 text-sm disabled:opacity-30"
+                    >←</button>
+                    <button
+                      type="button"
+                      aria-label={`Move slide ${index + 1} later`}
+                      disabled={index === media.homeCarouselUrls.length - 1}
+                      onClick={() => setMedia((current) => {
+                        const urls = [...current.homeCarouselUrls];
+                        [urls[index], urls[index + 1]] = [urls[index + 1], urls[index]];
+                        return { ...current, homeCarouselUrls: urls };
+                      })}
+                      className="h-8 w-8 border border-zinc-200 text-sm disabled:opacity-30"
+                    >→</button>
+                    <button
+                      type="button"
+                      aria-label={`Remove slide ${index + 1}`}
+                      onClick={() => setMedia((current) => ({ ...current, homeCarouselUrls: current.homeCarouselUrls.filter((_, itemIndex) => itemIndex !== index) }))}
+                      className="h-8 w-8 border border-zinc-200 text-sm text-red-600"
+                    >×</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex min-h-36 items-center justify-center border border-dashed border-zinc-300 bg-zinc-50 px-5 text-center text-sm text-zinc-500">Add your first carousel image to replace the plain homepage background.</div>
+        )}
+
+        <div className="mt-6 flex justify-end">
+          <button
+            type="button"
+            onClick={saveCarousel}
+            disabled={savingMedia || uploadingCarousel}
+            className="inline-flex h-11 items-center justify-center gap-2 bg-black px-5 text-[10px] font-bold uppercase tracking-widest text-white transition hover:bg-zinc-800 disabled:opacity-40"
+          >
+            {savingMedia ? <Loader2 size={15} className="animate-spin" /> : <Save size={15} />}
+            Save carousel
+          </button>
         </div>
       </section>
 

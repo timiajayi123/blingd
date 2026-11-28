@@ -19,6 +19,11 @@ body:has(.blank-homepage) .scanlines {
   background: #fff;
 }
 
+.blank-homepage.has-carousel .home-brand-wordmark {
+  color: #fff;
+  text-shadow: 0 2px 24px rgb(0 0 0 / 0.55);
+}
+
 /* Tall, compressed wordmark styling used by the storefront title. */
 .shop-wordmark {
   display: inline-block;
@@ -124,32 +129,17 @@ body:has(.blank-homepage) .scanlines {
 .home-wordmark-lockup {
   position: relative;
   display: flex;
-  width: 100vw;
+  width: 100%;
   justify-content: center;
   isolation: isolate;
   overflow: visible;
 }
 
-.home-wordmark-be {
-  position: absolute;
-  z-index: 2;
-  top: clamp(-3.9rem, -8vw, -2.15rem);
-  left: clamp(29%, 24vw, 31%);
-  color: #111;
-  font-family: var(--font-blingd-script), cursive;
-  font-size: clamp(6.25rem, 16vw, 11.5rem);
-  font-weight: 300;
-  line-height: 0.76;
-  opacity: 1;
-  transform: translateX(-50%) scaleX(0.84);
-  transform-origin: left center;
-  white-space: nowrap;
-}
-
 .home-brand-wordmark {
   position: relative;
   z-index: 1;
-  translate: clamp(2.75rem, 6vw, 6.5rem) clamp(1.1rem, 2.5vw, 2.75rem);
+  left: 0;
+  translate: 0;
 }
 
 .home-wordmark-caret {
