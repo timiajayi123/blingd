@@ -33,7 +33,7 @@ const mapProducts = (products: Product[]) =>
 function ShopWordmark() {
   return (
     <Link href="/" className="flex w-full translate-y-2 justify-center px-6 pb-5 pt-6 sm:pb-6 sm:pt-7" aria-label="Return home">
-      <h1 className="shop-script-wordmark" aria-label="Bling’d"><span aria-hidden="true">Bl<span className="shop-wordmark__inverted-i">i</span>ng&apos;d</span></h1>
+      <h1 className="shop-script-wordmark" aria-label="BLING’D"><span aria-hidden="true">BL<span className="shop-wordmark__inverted-i">I</span>NG&apos;D</span></h1>
     </Link>
   );
 }
