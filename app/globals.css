@@ -176,8 +176,12 @@ body:has(.blank-homepage) .scanlines {
 /* Reusable for wordmarks containing an I: rotation stays isolated from its siblings. */
 .shop-wordmark__inverted-i {
   display: inline-block;
-  transform: rotate(180deg);
+  animation: footer-wordmark-i-loop 2.8s cubic-bezier(0.65, 0, 0.35, 1) 120ms infinite;
   transform-origin: center 52%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-wordmark__inverted-i { animation: none; transform: rotate(180deg); }
 }
 
 .footer-visors {

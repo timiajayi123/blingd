@@ -33,7 +33,7 @@ const mapProducts = (products: Product[]) =>
 function ShopWordmark() {
   return (
     <Link href="/" className="flex w-full translate-y-2 justify-center px-6 pb-5 pt-6 sm:pb-6 sm:pt-7" aria-label="Return home">
-      <h1 className="shop-script-wordmark">Bling&apos;d</h1>
+      <h1 className="shop-script-wordmark" aria-label="Bling’d"><span aria-hidden="true">Bl<span className="shop-wordmark__inverted-i">i</span>ng&apos;d</span></h1>
     </Link>
   );
 }
@@ -192,11 +192,11 @@ export default function StorefrontShopClient({
                     <motion.div
                       animate={{ rotate: 360 }}
                       transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                      className="absolute inset-[-80%] bg-[conic-gradient(from_0deg,transparent_0deg,transparent_290deg,rgba(0,0,0,0.15)_310deg,#000_342deg,transparent_360deg)]"
+                      className="absolute inset-[-80%] bg-[conic-gradient(from_0deg,transparent_0deg,transparent_290deg,rgba(255,255,255,0.15)_310deg,#fff_342deg,transparent_360deg)]"
                     />
-                    <div className="absolute inset-[2px] rounded-[14px] bg-white/95" />
-                    <div className="absolute inset-0 animate-[radarPulse_2.6s_ease-out_infinite] rounded-2xl border border-black/25" />
-                    <div className="absolute inset-3 animate-[radarPulse_2.6s_ease-out_0.8s_infinite] rounded-xl border border-black/15" />
+                    <div className="absolute inset-[2px] rounded-[14px] bg-black/95" />
+                    <div className="absolute inset-0 animate-[radarPulse_2.6s_ease-out_infinite] rounded-2xl border border-white/25" />
+                    <div className="absolute inset-3 animate-[radarPulse_2.6s_ease-out_0.8s_infinite] rounded-xl border border-white/15" />
                   </div>
                   <div className="relative z-10 flex flex-col gap-2 rounded-[13px] px-4 py-6">
                     {categories.map((cat) => (
@@ -204,7 +204,7 @@ export default function StorefrontShopClient({
                         key={cat.$id}
                         onClick={() => handleCategoryClick(cat.name)}
                         className={`block w-full px-2 py-2 text-left text-[10px] font-mono font-black uppercase tracking-[0.1em] transition-all duration-300 hover:translate-x-2 ${
-                          activeCategory?.toLowerCase() === cat.name.toLowerCase() ? "text-black" : "text-black/70"
+                          activeCategory?.toLowerCase() === cat.name.toLowerCase() ? "text-white" : "text-white/70"
                         }`}
                       >
                         {cat.name}
@@ -213,7 +213,7 @@ export default function StorefrontShopClient({
                     <button
                       onClick={() => handleCategoryClick(null)}
                       className={`block w-full px-2 py-2 text-left text-[10px] font-black uppercase tracking-[0.3em] ${
-                        !activeCategory ? "text-black" : "text-black/70"
+                        !activeCategory ? "text-white" : "text-white/70"
                       }`}
                     >
                       View All
@@ -281,11 +281,11 @@ export default function StorefrontShopClient({
                   <motion.div
                     animate={{ rotate: 360 }}
                     transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-[-80%] bg-[conic-gradient(from_0deg,transparent_0deg,transparent_290deg,rgba(0,0,0,0.15)_310deg,#000_342deg,transparent_360deg)]"
+                    className="absolute inset-[-80%] bg-[conic-gradient(from_0deg,transparent_0deg,transparent_290deg,rgba(255,255,255,0.15)_310deg,#fff_342deg,transparent_360deg)]"
                   />
-                  <div className="absolute inset-[2px] rounded-[14px] bg-white/95" />
-                  <div className="absolute inset-0 animate-[radarPulse_2.6s_ease-out_infinite] rounded-2xl border border-black/25" />
-                  <div className="absolute inset-3 animate-[radarPulse_2.6s_ease-out_0.8s_infinite] rounded-xl border border-black/15" />
+                  <div className="absolute inset-[2px] rounded-[14px] bg-black/95" />
+                  <div className="absolute inset-0 animate-[radarPulse_2.6s_ease-out_infinite] rounded-2xl border border-white/25" />
+                  <div className="absolute inset-3 animate-[radarPulse_2.6s_ease-out_0.8s_infinite] rounded-xl border border-white/15" />
                 </div>
 
                 <div className="relative z-10 flex flex-col gap-2 rounded-[13px] px-4 py-6">
@@ -299,7 +299,7 @@ export default function StorefrontShopClient({
                       <button
                         onClick={() => handleCategoryClick(cat.name)}
                         className={`block w-full text-left text-[10px] md:text-xs font-mono font-black uppercase tracking-[0.1em] hover:translate-x-2 transition-all duration-300 py-2 px-2 active:scale-95 ${
-                          activeCategory?.toLowerCase() === cat.name.toLowerCase() ? "text-black" : "text-black/70"
+                          activeCategory?.toLowerCase() === cat.name.toLowerCase() ? "text-white" : "text-white/70"
                         }`}
                       >
                         {cat.name}
@@ -315,7 +315,7 @@ export default function StorefrontShopClient({
                       <button
                         onClick={() => handleCategoryClick(null)}
                         className={`block w-full text-left text-[10px] font-black uppercase tracking-[0.3em] py-2 px-2 active:scale-95 ${
-                          !activeCategory ? "text-black" : "text-black/70"
+                          !activeCategory ? "text-white" : "text-white/70"
                         }`}
                       >
                         View All
