@@ -52,7 +52,7 @@ export default function Footer() {
             <span className="mb-1.5 block text-[8px] uppercase tracking-[0.2em] text-white/50 md:text-[9px]">Powered by</span>
             <span className="block text-base leading-none tracking-[-0.04em] text-white md:text-2xl">TIMZI INC.</span>
           </a>
-          <p className="shrink-0 pb-0.5 text-right text-[8px] uppercase tracking-[0.06em] text-white/45 sm:text-[10px]">© 2026 BLING&apos;D</p>
+          <p className="shrink-0 pb-0.5 text-right text-[8px] uppercase tracking-[0.06em] text-white sm:text-[10px]">© 2026 BLING&apos;D</p>
         </div>
       </div>
     </footer>
